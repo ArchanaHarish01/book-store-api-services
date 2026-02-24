@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 
 const bookSchema = new mongoose.Schema({
      _id: {
         type: String,
-        default: uuidv4
+        default: () => randomUUID()
      },
     title: {
         type: String,
