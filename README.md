@@ -67,6 +67,23 @@ For production-like start:
 npm start
 ```
 
+## Deploy on Vercel
+This project is configured to run on Vercel using `api/index.js` and `vercel.json`.
+
+### Steps
+1. Push your project to GitHub.
+2. Import the repository in Vercel.
+3. In Vercel Project Settings, add environment variables:
+   - `MONGO_URI`
+   - `JWT_SECRET`
+   - `PORT` (optional)
+4. Deploy.
+
+### Notes
+- Vercel routes are configured to forward all paths to `api/index.js`.
+- Database connection is initialized per serverless instance and reused while warm.
+- Your local run (`npm run dev` / `npm start`) still works with `src/server.js`.
+
 ## API Base URL
 `http://localhost:3000`
 
