@@ -4,12 +4,20 @@ const connectDB = require('../src/config/db');
 
 dotenv.config();
 
+const shouldConnectDB = (url = '') => {
+  return url.startsWith('/api/auth') || url.startsWith('/api/books');
+};
+
 module.exports = async (req, res) => {
   try {
-    await connectDB();
+    if (shouldConnectDB(req.url)) {
+      await connectDB();
+    }
     return app(req, res);
   } catch (error) {
-    console.error('Database connection failed:', error.message);
-    return res.status(500).json({ message: 'Database connection error' });
+    console.error('Request failed:', error.message);
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'application/json');
+    return res.end(JSON.stringify({ message: 'Internal server error' }));
   }
 };
